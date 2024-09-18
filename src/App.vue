@@ -31,6 +31,18 @@ import HelloWorld from "./components/HelloWorld.vue";
               >Personajes</RouterLink
             >
           </li>
+          <li class="nav-item">
+            <RouterLink to="/naves" class="nav-link">Naves</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/vehiculos" class="nav-link">Vehiculos</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/especies" class="nav-link">Especies</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/planetas" class="nav-link">Planetas</RouterLink>
+          </li>
         </ul>
         <form class="d-flex my-2 my-lg-0">
           <input

@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-center">Personajes</h1>
+  <h1 class="text-center">Planetas</h1>
 
   <div class="d-flex justify-content-center mb-1">
     <div class="col-md-6 text-center m-2">
@@ -16,10 +16,10 @@
 
   <div class="row justify-content-center">
     <div
-      v-for="personaje in personajes"
-      :key="personaje"
+      v-for="planeta in planetas"
+      :key="planeta"
       class="col-md-3 mb-2 col-lg-2 col-sm-4"
-      @click="seleccionado = personaje"
+      @click="seleccionado = planeta"
       role="button"
       data-bs-toggle="modal"
       data-bs-target="#modalId"
@@ -28,15 +28,16 @@
         <img
           class="card-img-top"
           :src="
-            'https://starwars-visualguide.com/assets/img/characters/' +
-            personaje.url.split('/')[5] +
+            'https://starwars-visualguide.com/assets/img/planets/' +
+            planeta.url.split('/')[5] +
             '.jpg'
           "
-          alt="img"
+          alt="Aqui va la imagen de la planeta :v"
+          onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'"
         />
         <div class="card-body">
           <h5 class="card-title">
-            {{ personaje.name }}
+            {{ planeta.name }}
           </h5>
         </div>
       </div>
@@ -75,11 +76,12 @@
               class="card-img-top shadow"
               style="height: 200px; width: auto; border-radius: 5px"
               :src="
-                'https://starwars-visualguide.com/assets/img/characters/' +
+                'https://starwars-visualguide.com/assets/img/planets/' +
                 seleccionado.url.split('/')[5] +
                 '.jpg'
               "
-              alt="img"
+              alt="Aqui va la imagen de la planeta :v"
+              onerror="this.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'"
             />
           </div>
 
@@ -89,47 +91,28 @@
           </div>
 
           <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Año de nacimiento:</span>
-            <p class="card-text">{{ seleccionado.birth_year }}</p>
+            <span class="fw-bolder badge bg-dark">Clima:</span>
+            <p class="card-text">{{ seleccionado.climate }}</p>
           </div>
 
           <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Genero:</span>
-            <p
-              class="card-text badge"
-              :class="{
-                'bg-primary': seleccionado.gender === 'male',
-                'bg-warning': seleccionado.gender === 'female',
-                'bg-danger': seleccionado.gender === 'n/a',
-              }"
-            >
-              {{ seleccionado.gender }}
-            </p>
+            <span class="fw-bolder badge bg-dark">Diametro:</span>
+            <p class="card-text">{{ seleccionado.diameter }}</p>
           </div>
 
           <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Altura:</span>
-            <p class="card-text">{{ seleccionado.height }}</p>
+            <span class="fw-bolder badge bg-dark">Gravedad:</span>
+            <p class="card-text">{{ seleccionado.gravity }}</p>
           </div>
 
           <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Peso:</span>
-            <p class="card-text">{{ seleccionado.mass }}</p>
+            <span class="fw-bolder badge bg-dark">Poblacion:</span>
+            <p class="card-text">{{ seleccionado.population }}</p>
           </div>
 
           <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Color de ojos:</span>
-            <p class="card-text">{{ seleccionado.eye_color }}</p>
-          </div>
-
-          <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Color de cabello:</span>
-            <p class="card-text">{{ seleccionado.hair_color }}</p>
-          </div>
-
-          <div class="d-flex justify-content-between mb-1 border-bottom py-2">
-            <span class="fw-bolder badge bg-dark">Color de piel:</span>
-            <p class="card-text">{{ seleccionado.skin_color }}</p>
+            <span class="fw-bolder badge bg-dark">Periodo de rotacion:</span>
+            <p class="card-text">{{ seleccionado.rotation_period }}</p>
           </div>
         </div>
       </div>
@@ -140,20 +123,20 @@
 <script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
-const personajes = ref([]);
+const planetas = ref([]);
 
 const seleccionado = ref({});
 
 const prev = ref([]);
 const next = ref([]);
 onMounted(() => {
-  cargarPersonajes();
+  cargarPlanetas();
 });
-const cargarPersonajes = async () => {
+const cargarPlanetas = async () => {
   try {
-    const { data } = await axios.get("https://swapi.dev/api/people");
-    personajes.value = data.results;
-    console.log(personajes.value);
+    const { data } = await axios.get("https://swapi.dev/api/planets");
+    planetas.value = data.results;
+    console.log(planetas.value);
 
     prev.value = data.previous;
     next.value = data.next;
@@ -165,7 +148,7 @@ const cargarPersonajes = async () => {
 const siguiente = async () => {
   try {
     const { data } = await axios.get(next.value);
-    personajes.value = data.results;
+    planetas.value = data.results;
     prev.value = data.previous;
     next.value = data.next;
   } catch (error) {
@@ -176,7 +159,7 @@ const siguiente = async () => {
 const anterior = async () => {
   try {
     const { data } = await axios.get(prev.value);
-    personajes.value = data.results;
+    planetas.value = data.results;
     prev.value = data.previous;
     next.value = data.next;
   } catch (error) {
